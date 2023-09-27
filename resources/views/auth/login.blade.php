@@ -14,6 +14,12 @@
             <li class="text-danger"> {{ session('status') }}</li>
         </ul>
     @endif
+
+    @if (session('message'))
+        <ul>
+            <li class="text-danger"> {{ session('message') }}</li>
+        </ul>
+    @endif
     @csrf
     Email
     <input type="email" name="email">
@@ -22,4 +28,7 @@
     <input type="password" name="password">
     <br>
     <button>Login</button>
+    <a href="{{ route('register') }}">
+        Register
+    </a>
 </form>

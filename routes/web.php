@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\StoryController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\CheckLoginMiddleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,11 +23,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('login', [AuthController::class, 'login'])->name('login');
 Route::post('login', [AuthController::class, 'processLogin'])->name('process_login');
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('register', [AuthController::class, 'processRegister'])->name('process_register');
+
 
 Route::group([
-    'middleware' => 'checklogin',
+    'middleware' => CheckLoginMiddleware::class,
 ], function () {
-
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/', [UserController::class, 'index'])->name('home');
     Route::resource('users', UserController::class)->except([
         'show',
