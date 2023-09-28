@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('content')
-    <form action="{{ route('users.store') }}" method="post">
+    <form action="{{ route('users.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         Name
         <input type="text" name="name" value="{{ old('name') }}">
@@ -72,6 +72,10 @@
                 {{ $errors->first('level') }}
             </span>
         @endif
+        <br>
+
+        Avatar
+        <input type="file" name="avatar">
         <br>
 
         <button>Create</button>

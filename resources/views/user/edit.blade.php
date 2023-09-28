@@ -1,6 +1,6 @@
 @extends('layout.master')
 @section('content')
-    <form action="{{ route('users.update', $each) }}" method="post">
+    <form action="{{ route('users.update', $each) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -75,6 +75,11 @@
                 {{ $errors->first('level') }}
             </span>
         @endif
+        <br>
+
+
+        Avatar
+        <input type="file" name="avatar" value="{{ $each->avatar }}">
         <br>
 
         <button>Update</button>

@@ -10,6 +10,7 @@ use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
@@ -39,7 +40,11 @@ class UserController extends Controller
 
     public function store(CreateRequest $request)
     {
-        User::create($request->validated());
+        // $request
+        $path = Storage::disk('public')->putFile('avatars', $request->file('avatar'));
+        $arr = $request->validated();
+        $arr['avatar'] = $path;
+        User::create($arr);
         return redirect()->route('users.index');
     }
 
@@ -51,8 +56,12 @@ class UserController extends Controller
 
     public function update(UpdateRequest $request, $userId)
     {
+        $path = Storage::disk('public')->putFile('avatars', $request->file('avatar'));
+        $arr = $request->validated();
+        $arr['avatar'] = $path;
+
         $object = $this->model->find($userId);
-        $object->fill($request->validated());
+        $object->fill($arr);
         $object->save();
 
         return redirect()->route('users.index');

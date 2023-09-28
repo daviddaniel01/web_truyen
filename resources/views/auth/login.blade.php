@@ -1,34 +1,70 @@
-<form method="post" action="{{ route('process_login') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-9 col-lg-6 col-xl-5">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                    class="img-fluid" alt="Sample image">
+            </div>
 
+            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <form method="post" action="{{ route('process_login') }}">
+                    @csrf
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example3" class="form-control form-control-lg"
+                            placeholder="Enter a valid email address" name="email" />
+                        @if ($errors->has('email'))
+                            <span class="error">
+                                {{ $errors->first('email') }}
+                            </span>
+                        @else
+                            <label class="form-label" for="form3Example3">Email address</label>
+                        @endif
+                    </div>
 
-    @if (count($errors) > 0)
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li class="text-danger"> {{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+                    <!-- Password input -->
+                    <div class="form-outline mb-3">
+                        <input type="password" id="form3Example4" class="form-control form-control-lg"
+                            placeholder="Enter password" name="password" />
+                        @if ($errors->has('password'))
+                            <span class="error">
+                                {{ $errors->first('password') }}
+                            </span>
+                        @else
+                            <label class="form-label" for="form3Example4">Password</label>
+                        @endif
+                    </div>
 
-    @if (session('status'))
-        <ul>
-            <li class="text-danger"> {{ session('status') }}</li>
-        </ul>
-    @endif
+                    @if (session('status'))
+                        <ul>
+                            <li class="text-danger"> {{ session('status') }}</li>
+                        </ul>
+                    @endif
 
-    @if (session('message'))
-        <ul>
-            <li class="text-danger"> {{ session('message') }}</li>
-        </ul>
-    @endif
-    @csrf
-    Email
-    <input type="email" name="email">
-    <br>
-    Password
-    <input type="password" name="password">
-    <br>
-    <button>Login</button>
-    <a href="{{ route('register') }}">
-        Register
-    </a>
-</form>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Checkbox -->
+                        <div class="form-check mb-0">
+                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                            <label class="form-check-label" for="form2Example3">
+                                Remember me
+                            </label>
+                        </div>
+                        <a href="#!" class="text-body">Forgot password?</a>
+                    </div>
+
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                        <button class="btn btn-primary btn-lg"
+                            style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+
+                        <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account?
+                            <a href="{{ route('register') }}" class="link-danger">Register</a>
+                        </p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -7,7 +7,7 @@ use App\Enums\UserStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model 
+class User extends Model
 {
     use HasFactory;
     protected $table = 'users';
@@ -19,6 +19,7 @@ class User extends Model
         'birthday',
         'status',
         'level',
+        'avatar',
     ];
 
 

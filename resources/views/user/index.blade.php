@@ -10,6 +10,7 @@
             <th>Giới tính</th>
             <th>Tình trạng</th>
             <th>Vai trò</th>
+            <th>Ảnh</th>
             <th>Hoạt động</th>
         </tr>
         @foreach ($data as $each)
@@ -21,6 +22,7 @@
                 <td>{{ $each->gender_name }}</td>
                 <td>{{ $each->status }}</td>
                 <td>{{ $each->level }}</td>
+                <td><img src="storage/{{ $each->avatar }}"></td>
                 <td>
                     <div class="d-flex">
                         <a class="btn btn-primary" href="{{ route('users.edit', $each) }}">

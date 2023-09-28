@@ -62,6 +62,11 @@ class CreateRequest extends FormRequest
                 'required',
                 Rule::in(UserLevelEnum::asArray()),
             ],
+            'avatar' => [
+                'nullable',
+                'file',
+                'image',
+            ]
         ];
     }
 
@@ -74,6 +79,8 @@ class CreateRequest extends FormRequest
             'unique' => ':attribute đã tồn tại',
             'before:today' => ':attribute không hợp lệ',
             'email' => 'Bắt buộc phải là email',
+            'image' => 'Bắt buộc là ảnh',
+            'file' => 'Bắt buộc là file',
         ];
     }
 
@@ -83,11 +90,12 @@ class CreateRequest extends FormRequest
         return [
             'name' => 'Tên',
             'gender' => ' Giới tính',
-            'birthdate' => 'Ngày sinh',
+            'birthday' => 'Sinh nhật',
             'email' => 'Email',
             'password' => 'Mật khẩu',
             'status' => 'Trạng thái',
             'level' => 'Vai trò',
+            'avatar' => 'Ảnh',
         ];
     }
 }

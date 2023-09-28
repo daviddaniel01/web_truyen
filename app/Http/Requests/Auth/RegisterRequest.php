@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Auth;
 
-use App\Enums\UserLevelEnum;
-use App\Enums\UserStatusEnum;
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class UpdateRequest extends FormRequest
+class RegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,50 +28,27 @@ class UpdateRequest extends FormRequest
                 'bail',
                 'required',
                 'string',
-                Rule::unique(User::class)->ignore($this->user),
             ],
             'email' => [
                 'bail',
                 'required',
                 'email',
-                Rule::unique(User::class)->ignore($this->user),
             ],
             'password' => [
                 'bail',
                 'required',
-                Rule::unique(User::class)->ignore($this->user),
             ],
             'gender' => [
                 'bail',
                 'required',
                 'boolean',
-                Rule::unique(User::class)->ignore($this->user),
             ],
             'birthday' => [
                 'bail',
                 'required',
                 'date',
-                'before:today',
-                Rule::unique(User::class)->ignore($this->user),
+                'before:today'
             ],
-            'status' => [
-                'bail',
-                'required',
-                Rule::in(UserStatusEnum::asArray()),
-                Rule::unique(User::class)->ignore($this->user),
-            ],
-            'level' => [
-                'bail',
-                'required',
-                Rule::in(UserLevelEnum::asArray()),
-                Rule::unique(User::class)->ignore($this->user),
-            ],
-            'avatar' => [
-                'nullable',
-                'file',
-                'image',
-                Rule::unique(User::class)->ignore($this->user),
-            ]
         ];
     }
 
@@ -99,7 +72,7 @@ class UpdateRequest extends FormRequest
         return [
             'name' => 'Tên',
             'gender' => ' Giới tính',
-            'birthdate' => 'Ngày sinh',
+            'birthday' => 'Sinh nhật',
             'email' => 'Email',
             'password' => 'Mật khẩu',
             'status' => 'Trạng thái',

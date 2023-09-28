@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function processLogin(Request $request)
+    public function processLogin(LoginRequest $request)
     {
         try {
             $user = User::query()
@@ -33,6 +34,7 @@ class AuthController extends Controller
             session()->put('level', $user->level);
             session()->put('birthday', $user->birthday);
             session()->put('status', $user->status);
+            session()->put('avatar', $user->avatar);
             session()->put('gender', $user->gender);
             return redirect()->route('stories.index');
         } catch (Throwable $e) {
@@ -57,7 +59,7 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function processRegister(Request $request)
+    public function processRegister(RegisterRequest $request)
     {
         try {
             User::create([
