@@ -8,13 +8,18 @@ use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 class CategoryController extends Controller
 {
     public function __construct()
     {
-        $this->model = (new Category())->query();
+
         $routeName = Route::currentRouteName();
+        $arr = explode('.', $routeName); // tách chuỗi
+        $arr = array_map('ucfirst', $arr); // viết hoa chữ cái đầu
+        $title = implode(' - ', $arr); //nối mảng
+        View::share('title', $title);
     }
 
     public function index()
@@ -42,16 +47,17 @@ class CategoryController extends Controller
     }
 
 
-    public function update(UpdateRequest $request, $authorId)
+    public function update(UpdateRequest $request, $categoryId)
     {
-        $object = $this->model->find($authorId);
-        $object->fill($request->validated());
-        $object->save();
+
+        $category = Category::findOrFail($categoryId);
+        $arr = $request->validated();
+        $category->update($arr);
 
         return redirect()->route('categories.index');
     }
 
-    public function destroy(DestroyRequest $request, $category)
+    public function destroy($category)
     {
         Category::destroy($category);
         return redirect()->route('categories.index');

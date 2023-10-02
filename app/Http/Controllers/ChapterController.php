@@ -9,13 +9,17 @@ use App\Models\Chapter;
 use App\Models\Story;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 
 class ChapterController extends Controller
 {
     public function __construct()
     {
-        $this->model = (new Chapter())->query();
         $routeName = Route::currentRouteName();
+        $arr = explode('.', $routeName); // tách chuỗi
+        $arr = array_map('ucfirst', $arr); // viết hoa chữ cái đầu
+        $title = implode(' - ', $arr); //nối mảng
+        View::share('title', $title);
     }
 
     public function index()
@@ -48,14 +52,14 @@ class ChapterController extends Controller
 
     public function update(UpdateRequest $request, $chapterId)
     {
-        $object = $this->model->find($chapterId);
-        $object->fill($request->validated());
-        $object->save();
+        $chapter = Chapter::findOrFail($chapterId);
+        $arr = $request->validated();
+        $chapter->update($arr);
 
         return redirect()->route('chapters.index');
     }
 
-    public function destroy(DestroyRequest $request, $chapter)
+    public function destroy($chapter)
     {
         Chapter::destroy($chapter);
         return redirect()->route('chapters.index');

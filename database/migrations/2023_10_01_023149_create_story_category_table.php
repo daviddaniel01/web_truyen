@@ -15,8 +15,8 @@ class CreateStoryCategoryTable extends Migration
     {
         Schema::create('story_category', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('story_id')->constrained('stories', 'id');
-            $table->foreignId('category_id')->constrained('categories', 'id');
+            $table->foreignId('story_id')->constrained('stories', 'id')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories', 'id')->onDelete('cascade');
             $table->timestamps();
         });
     }

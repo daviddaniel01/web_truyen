@@ -9,6 +9,7 @@ use App\Models\Author;
 use App\Models\Category;
 use App\Models\Chapter;
 use App\Models\Story;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -17,8 +18,12 @@ class StoryController extends Controller
 {
     public function __construct()
     {
-        $this->model = (new Story())->query();
+        // $this->model = (new Story())->query();
         $routeName = Route::currentRouteName();
+        $arr = explode('.', $routeName); // tách chuỗi
+        $arr = array_map('ucfirst', $arr); // viết hoa chữ cái đầu
+        $title = implode(' - ', $arr); //nối mảng
+        View::share('title', $title);
     }
 
     public function index()
@@ -69,11 +74,12 @@ class StoryController extends Controller
 
     public function update(UpdateRequest $request, $storyId)
     {
-        $object = $this->model->find($storyId);
-        $object->fill($request->validated());
+        $story = Story::findOrFail($storyId);
+        $story->update($request->validated());
+
         $categories = $request->input('categories');
-        $object->categories()->sync($categories);
-        $object->save();
+        $story->categories()->sync($categories);
+        $story->save();
 
         return redirect()->route('stories.index');
     }
@@ -87,7 +93,7 @@ class StoryController extends Controller
         ]);
     }
 
-    public function destroy(DestroyRequest $request, $story)
+    public function destroy($story)
     {
         Story::destroy($story);
         return redirect()->route('stories.index');

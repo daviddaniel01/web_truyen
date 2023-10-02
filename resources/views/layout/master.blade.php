@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Breeze Admin</title>
+    <title>{{ $title }}</title>
     <link rel="stylesheet" href="{{ asset('vendors/mdi/css/materialdesignicons.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendors/flag-icon-css/css/flag-icon.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}" />
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ asset('vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+    @stack('css')
 </head>
 
 <body>
@@ -22,6 +23,13 @@
             <div class="wrapper" style="width:100%">
                 @include('layout.header')
                 <div class="main-panel">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title">{{ $title }}</h4>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         @if ($errors->any())
                             <div class="col-12">
@@ -43,10 +51,10 @@
                         @endif
                     </div>
 
-
                     <div class="col-12">
                         @yield('content')
                     </div>
+
                 </div>
                 @include('layout.footer')
             </div>
@@ -75,6 +83,7 @@
     <!-- Custom js for this page -->
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <!-- End custom js for this page -->
+    @stack('js')
 </body>
 
 </html>

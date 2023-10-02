@@ -30,6 +30,7 @@ class CreateRequest extends FormRequest
                 'bail',
                 'required',
                 'string',
+                Rule::unique(Story::class)->ignore($this->story),
             ],
             'author_id' => [
                 'bail',

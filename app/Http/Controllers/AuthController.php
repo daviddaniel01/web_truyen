@@ -36,7 +36,7 @@ class AuthController extends Controller
             session()->put('status', $user->status);
             session()->put('avatar', $user->avatar);
             session()->put('gender', $user->gender);
-            return redirect()->route('stories.index');
+            return redirect()->route('users.index');
         } catch (Throwable $e) {
             return redirect()->route('login')->with('status', 'sai cmnr');
         }

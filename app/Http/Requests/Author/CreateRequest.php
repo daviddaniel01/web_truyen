@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Author;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateRequest extends FormRequest
 {
@@ -28,11 +29,13 @@ class CreateRequest extends FormRequest
                 'bail',
                 'required',
                 'string',
+                Rule::unique(Author::class)->ignore($this->author),
             ],
             'alias' => [
                 'bail',
                 'required',
                 'string',
+                Rule::unique(Author::class)->ignore($this->author),
             ],
             'gender' => [
                 'bail',

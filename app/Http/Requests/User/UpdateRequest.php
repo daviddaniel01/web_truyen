@@ -31,8 +31,7 @@ class UpdateRequest extends FormRequest
             'name' => [
                 'bail',
                 'required',
-                'string',
-                Rule::unique(User::class)->ignore($this->user),
+                'string',               
             ],
             'email' => [
                 'bail',
@@ -43,38 +42,32 @@ class UpdateRequest extends FormRequest
             'password' => [
                 'bail',
                 'required',
-                Rule::unique(User::class)->ignore($this->user),
             ],
             'gender' => [
                 'bail',
                 'required',
                 'boolean',
-                Rule::unique(User::class)->ignore($this->user),
             ],
             'birthday' => [
                 'bail',
                 'required',
                 'date',
                 'before:today',
-                Rule::unique(User::class)->ignore($this->user),
             ],
             'status' => [
                 'bail',
                 'required',
                 Rule::in(UserStatusEnum::asArray()),
-                Rule::unique(User::class)->ignore($this->user),
             ],
             'level' => [
                 'bail',
                 'required',
                 Rule::in(UserLevelEnum::asArray()),
-                Rule::unique(User::class)->ignore($this->user),
             ],
             'avatar' => [
                 'nullable',
                 'file',
                 'image',
-                Rule::unique(User::class)->ignore($this->user),
             ]
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateRequest extends FormRequest
 {
@@ -28,6 +29,7 @@ class CreateRequest extends FormRequest
                 'bail',
                 'required',
                 'string',
+                Rule::unique(Category::class)->ignore($this->category)
             ],
         ];
     }

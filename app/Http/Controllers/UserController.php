@@ -9,6 +9,7 @@ use App\Http\Requests\User\DestroyRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
@@ -17,12 +18,15 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->model = (new User())->query();
         $routeName = Route::currentRouteName();
+        $arr = explode('.', $routeName); // tách chuỗi
+        $arr = array_map('ucfirst', $arr); // viết hoa chữ cái đầu
+        $title = implode(' - ', $arr); //nối mảng
         $arrUserStatus = UserStatusEnum::getArrayView();
         $arrUserLevel = UserLevelEnum::getArrayView();
         View::share('arrUserStatus', $arrUserStatus);
         View::share('arrUserLevel', $arrUserLevel);
+        View::share('title', $title);
     }
 
     public function index()
@@ -44,6 +48,7 @@ class UserController extends Controller
         $path = Storage::disk('public')->putFile('avatars', $request->file('avatar'));
         $arr = $request->validated();
         $arr['avatar'] = $path;
+        $arr['password'] = Hash::make($request->password);
         User::create($arr);
         return redirect()->route('users.index');
     }
@@ -59,17 +64,19 @@ class UserController extends Controller
         $path = Storage::disk('public')->putFile('avatars', $request->file('avatar'));
         $arr = $request->validated();
         $arr['avatar'] = $path;
+        $arr['password'] = Hash::make($request->password);
 
-        $object = $this->model->find($userId);
-        $object->fill($arr);
-        $object->save();
+
+        $user = User::findOrFail($userId);
+        $user->update($arr);
 
         return redirect()->route('users.index');
     }
 
-    public function destroy(DestroyRequest $request, $user)
+    public function destroy($user)
     {
-        User::destroy($user);
+        $user = User::findOrFail($user);
+        $user->delete();
         return redirect()->route('users.index');
     }
 }

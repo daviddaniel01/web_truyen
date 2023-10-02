@@ -36,6 +36,7 @@ class CreateRequest extends FormRequest
                 'bail',
                 'required',
                 'email',
+                Rule::unique(User::class)->ignore($this->user),
             ],
             'password' => [
                 'bail',

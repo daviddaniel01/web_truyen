@@ -1,12 +1,11 @@
 <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
-    <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
-
-
+    <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between"
+        style="color: #cbbde2; background:#563d7c">
         <ul class="navbar-nav navbar-nav-right ml-lg-auto">
 
             <li class="nav-item nav-profile dropdown border-0">
                 <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
-                    <img class="nav-profile-img mr-2" alt="" src="storage/{{ session()->get('avatar') }}" />
+                    <img class="nav-profile-img mr-2" alt="" src="../storage/{{ session()->get('avatar') }}" />
                     <span class="profile-name">{{ session()->get('name') }}</span>
                 </a>
                 <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">

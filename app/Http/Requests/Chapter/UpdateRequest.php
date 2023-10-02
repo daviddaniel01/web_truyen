@@ -34,13 +34,11 @@ class UpdateRequest extends FormRequest
             ],
             'content' => [
                 'required',
-                Rule::unique(Chapter::class)->ignore($this->chapter)
             ],
             'story_id' => [
                 'bail',
                 'required',
                 Rule::exists(Story::class, 'id'),
-                Rule::unique(Chapter::class)->ignore($this->chapter)
             ]
         ];
     }
